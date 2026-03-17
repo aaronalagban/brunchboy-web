@@ -251,9 +251,16 @@ export default function DJPortfolio() {
 
       {/* GLOBAL BACKGROUND VIDEO */}
       <motion.div initial={false} animate={getVideoLayout()} transition={{ duration: 1.2, ease: SMOOTH_EASE }} className="absolute z-0 overflow-hidden bg-black flex flex-col justify-center">
-        <video autoPlay loop muted playsInline className="w-full h-full object-cover opacity-60">
-          <source src="/loop.mp4" type="video/mp4" />
-        </video>
+       <video
+  autoPlay
+  muted
+  loop
+  playsInline
+  preload="auto"
+  className="w-full h-full object-cover opacity-60"
+>
+  <source src="/loop.mp4" type="video/mp4" />
+</video>
         <div className="absolute inset-0 bg-[#0024E0] mix-blend-color pointer-events-none z-20" />
       </motion.div>
 
