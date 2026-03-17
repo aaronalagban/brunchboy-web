@@ -16,14 +16,14 @@ const DJ_DATA = {
     "/photos/gig-poster-2.jpg",
   ],
   photos: [
-    "/photos/brunchboy-1.jpg",
+    "/photos/brunchboy-1.JPG",
     "/photos/brunchboy-2.jpg",
-    "/photos/brunchboy-3.jpg",
+    "/photos/brunchboy-3.JPG",
     "/photos/brunchboy-4.jpg",
-    "/photos/brunchboy-5.jpg",
+    "/photos/brunchboy-5.JPG",
     "/photos/brunchboy-6.jpg",
     "/photos/brunchboy-7.JPEG",
-    "/photos/brunchboy-8.jpg"
+    "/photos/brunchboy-8.JPG"
   ],
   mixes: [
     // IMPORTANT: Ensure your "audio" folder is inside the "public" folder of your project!
