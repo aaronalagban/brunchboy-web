@@ -22,7 +22,7 @@ const DJ_DATA = {
     "/photos/brunchboy-4.jpg",
     "/photos/brunchboy-5.jpg",
     "/photos/brunchboy-6.jpg",
-    "/photos/brunchboy-7.jpg",
+    "/photos/brunchboy-7.jpeg",
     "/photos/brunchboy-8.jpg"
   ],
   mixes: [
