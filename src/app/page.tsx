@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, LayoutGroup, Variants} from 'framer-motion';
+import { motion, AnimatePresence, LayoutGroup, Variants } from 'framer-motion';
 import { ArrowRight, Play, Pause, ArrowLeft, ArrowUpRight, Download, SkipForward, SkipBack, X } from 'lucide-react';
 
 // --- BRAND DATA ---
@@ -16,7 +16,6 @@ const DJ_DATA = {
     "/photos/gig-poster-2.jpg",
   ],
   photos: [
-    // FIXED: Changed all extensions to lowercase .jpg to prevent Vercel case-sensitivity 404s
     "/photos/brunchboy-1.jpg",
     "/photos/brunchboy-2.jpg",
     "/photos/brunchboy-3.jpg",
@@ -47,25 +46,25 @@ const NAV_ITEMS = ['about', 'mixes', 'gigs', 'photos', 'contact'];
 const COLORS = ['#FF3300', '#CCFF00', '#000000', '#FFFFFF', '#0024E0'];
 
 // --- CUSTOM BRUTALIST GRAPHICS ---
-const ConcentricSquares = ({ className }) => (
+const ConcentricSquares = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 100 100" className={className}>
     {[0, 10, 20, 30, 40].map(i => <rect key={i} x={i} y={i} width={100 - i * 2} height={100 - i * 2} fill="none" stroke="currentColor" strokeWidth="3" />)}
   </svg>
 );
 
-const OpticalRays = ({ className }) => (
+const OpticalRays = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 100 100" className={className}>
     {[0, 20, 40, 60, 80, 100, 120, 140, 160].map(deg => <line key={deg} x1="50" y1="50" x2="50" y2="-50" stroke="currentColor" strokeWidth="4" transform={`rotate(${deg} 50 50)`} />)}
   </svg>
 );
 
-const BrutalistStar = ({ className }) => (
+const BrutalistStar = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 100 100" className={className}>
     <path fill="currentColor" d="M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z" />
   </svg>
 );
 
-const SharpStarburst = ({ className }) => (
+const SharpStarburst = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 100 100" className={className}>
     <path fill="currentColor" d="M50 0 L56 35 L90 15 L65 44 L100 50 L65 56 L90 85 L56 65 L50 100 L44 65 L10 85 L35 56 L0 50 L35 44 L10 15 L44 35 Z" />
   </svg>
@@ -91,7 +90,7 @@ const AppBackgroundShapes = () => (
   </div>
 );
 
-const FunkyVisualizer = ({ isPlaying }) => {
+const FunkyVisualizer = ({ isPlaying }: { isPlaying: boolean }) => {
   return (
     <div className={`absolute inset-0 pointer-events-none flex items-center justify-center transition-opacity duration-700 z-0 ${isPlaying ? 'opacity-100' : 'opacity-0'}`}>
       <motion.div animate={{ scale: isPlaying ? [1, 1.2, 1] : 1, rotate: isPlaying ? [0, 180, 360] : 0 }} transition={{ repeat: Infinity, duration: 2.5, ease: "linear" }} className="absolute w-[150vw] h-[150vw] md:w-[80vw] md:h-[80vw] border-[40px] md:border-[80px] border-[#CCFF00] rounded-full mix-blend-screen opacity-50" />
@@ -101,20 +100,22 @@ const FunkyVisualizer = ({ isPlaying }) => {
   );
 };
 
-const SMOOTH_EASE = [0.76, 0, 0.24, 1];
+// FIX FOR VERCEL TYPESCRIPT BUILD
+const SMOOTH_EASE: [number, number, number, number] = [0.76, 0, 0.24, 1];
 
 const staggerContainer = {
   hidden: { opacity: 0 },
   show: { opacity: 1, transition: { staggerChildren: 0.05 } }
 };
 
-const itemVariant = {
+// FIX FOR VERCEL TYPESCRIPT BUILD
+const itemVariant: Variants = {
   hidden: { opacity: 0, y: 20 },
   show: { 
     opacity: 1, 
     y: 0, 
     transition: { 
-      type: "spring",
+      type: "spring" as const,
       stiffness: 100, 
       damping: 15 
     } 
@@ -129,8 +130,8 @@ export default function DJPortfolio() {
   const [mixTab, setMixTab] = useState('audio'); 
   const [gigTab, setGigTab] = useState('notable'); 
   
-  const audioRef = useRef(null);
-  const [currentMix, setCurrentMix] = useState(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [currentMix, setCurrentMix] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -139,7 +140,7 @@ export default function DJPortfolio() {
   const [loaderTick, setLoaderTick] = useState(0);
   
   const [isDesktop, setIsDesktop] = useState(true);
-  const [expandedVideo, setExpandedVideo] = useState(null);
+  const [expandedVideo, setExpandedVideo] = useState<any>(null);
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth > 768);
@@ -161,7 +162,7 @@ export default function DJPortfolio() {
       const playPromise = audioRef.current.play();
       if (playPromise !== undefined) {
         playPromise.catch(error => {
-          console.error("Audio playback error (File might be missing or unsupported):", error);
+          console.error("Audio playback error:", error);
           setIsPlaying(false);
         });
       }
@@ -181,7 +182,7 @@ export default function DJPortfolio() {
     return { top: '80px', left: '0%', width: '100%', height: '100%', opacity: 0, scale: 1.05, pointerEvents: 'none' };
   };
 
-  const togglePlay = (mix) => {
+  const togglePlay = (mix: any) => {
     if (currentMix?.id === mix.id) {
       if (isPlaying) {
         audioRef.current?.pause();
@@ -218,7 +219,7 @@ export default function DJPortfolio() {
     setIsPlaying(true);
   };
 
-  const handleSeek = (e) => {
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!audioRef.current) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const pos = (e.clientX - rect.left) / rect.width;
@@ -240,7 +241,11 @@ export default function DJPortfolio() {
       <audio 
          ref={audioRef} 
          src={currentMix?.audioSrc} 
-         onTimeUpdate={() => setProgress((audioRef.current.currentTime / audioRef.current.duration) * 100 || 0)} 
+         onTimeUpdate={() => {
+            if (audioRef.current) {
+               setProgress((audioRef.current.currentTime / audioRef.current.duration) * 100 || 0);
+            }
+         }} 
          onEnded={() => playNext()} 
          onError={(e) => {
            console.error("Audio tag encountered an error loading the file:", e);
@@ -249,7 +254,7 @@ export default function DJPortfolio() {
       />
 
       {/* GLOBAL BACKGROUND VIDEO */}
-      <motion.div initial={false} animate={getVideoLayout()} transition={{ duration: 1.2, ease: SMOOTH_EASE }} className="absolute z-0 overflow-hidden bg-black flex flex-col justify-center">
+      <motion.div initial={false} animate={getVideoLayout() as any} transition={{ duration: 1.2, ease: SMOOTH_EASE }} className="absolute z-0 overflow-hidden bg-black flex flex-col justify-center">
        <video
           autoPlay
           muted
@@ -650,7 +655,7 @@ export default function DJPortfolio() {
 }
 
 // Fixed Sticky Header PageWrapper to accept Subtitle
-const PageWrapper = ({ children, title, subtitle = '', noScroll = false, headerRight = null }) => (
+const PageWrapper = ({ children, title, subtitle = '', noScroll = false, headerRight = null }: any) => (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4, ease: SMOOTH_EASE }} className="absolute inset-0 z-10 bg-transparent flex flex-col overflow-hidden">
     <div className="flex-shrink-0 z-20 bg-[#0024E0] pt-6 md:pt-12 pb-4 px-6 md:px-12 border-b-4 border-white shadow-xl">
        <div className="max-w-[1400px] mx-auto w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
