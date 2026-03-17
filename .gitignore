@@ -40,11 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Ignore large media files
-public/audio/
-public/loop.mp4
-public/photos/
-
 # Standard Node stuff
 node_modules
 .next
