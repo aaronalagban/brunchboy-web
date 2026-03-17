@@ -16,17 +16,17 @@ const DJ_DATA = {
     "/photos/gig-poster-2.jpg",
   ],
   photos: [
-    "/photos/brunchboy-1.JPG",
+    // FIXED: Changed all extensions to lowercase .jpg to prevent Vercel case-sensitivity 404s
+    "/photos/brunchboy-1.jpg",
     "/photos/brunchboy-2.jpg",
-    "/photos/brunchboy-3.JPG",
+    "/photos/brunchboy-3.jpg",
     "/photos/brunchboy-4.jpg",
-    "/photos/brunchboy-5.JPG",
+    "/photos/brunchboy-5.jpg",
     "/photos/brunchboy-6.jpg",
-    "/photos/brunchboy-7.JPEG",
-    "/photos/brunchboy-8.JPG"
+    "/photos/brunchboy-7.jpg",
+    "/photos/brunchboy-8.jpg"
   ],
   mixes: [
-    // IMPORTANT: Ensure your "audio" folder is inside the "public" folder of your project!
     { id: 1, title: "UKG WARMUP!", type: "UK GARAGE, HOUSE", date: "FEB 9", duration: "48:52", cover: "/photos/ukg-mix.gif", audioSrc: "/audio/ukg-mix.mp3" },
     { id: 2, title: "MARCH HOUSE FINDS", type: "ELECTRO FUNK, HOUSE", date: "MAR 12", duration: "27:48", cover: "/photos/electro-funky-house.gif", audioSrc: "/audio/electro-funky-house.mp3" },
     { id: 3, title: "POCKET GROOVES", type: "JAZZ & SOULFUL HOUSE", date: "MAR 14", duration: "50:29", cover: "/photos/jazzy-soulful.gif", audioSrc: "/audio/jazzy-soulful.mp3" },
@@ -101,20 +101,20 @@ const FunkyVisualizer = ({ isPlaying }) => {
   );
 };
 
-const SMOOTH_EASE: [number, number, number, number] = [0.76, 0, 0.24, 1];
+const SMOOTH_EASE = [0.76, 0, 0.24, 1];
 
 const staggerContainer = {
   hidden: { opacity: 0 },
   show: { opacity: 1, transition: { staggerChildren: 0.05 } }
 };
 
-const itemVariant: Variants = {
+const itemVariant = {
   hidden: { opacity: 0, y: 20 },
   show: { 
     opacity: 1, 
     y: 0, 
     transition: { 
-      type: "spring" as const, // The "as const" helps TS understand this is a specific literal
+      type: "spring",
       stiffness: 100, 
       damping: 15 
     } 
@@ -127,7 +127,7 @@ export default function DJPortfolio() {
   const [activeView, setActiveView] = useState('about');
   
   const [mixTab, setMixTab] = useState('audio'); 
-  const [gigTab, setGigTab] = useState('notable'); // Added state for Gig tabs
+  const [gigTab, setGigTab] = useState('notable'); 
   
   const audioRef = useRef(null);
   const [currentMix, setCurrentMix] = useState(null);
@@ -156,7 +156,6 @@ export default function DJPortfolio() {
     }
   }, [appState]);
 
-  // Secure Audio Playback useEffect
   useEffect(() => {
     if (currentMix && isPlaying && audioRef.current) {
       const playPromise = audioRef.current.play();
@@ -252,15 +251,15 @@ export default function DJPortfolio() {
       {/* GLOBAL BACKGROUND VIDEO */}
       <motion.div initial={false} animate={getVideoLayout()} transition={{ duration: 1.2, ease: SMOOTH_EASE }} className="absolute z-0 overflow-hidden bg-black flex flex-col justify-center">
        <video
-  autoPlay
-  muted
-  loop
-  playsInline
-  preload="auto"
-  className="w-full h-full object-cover opacity-60"
->
-  <source src="/loop.mp4" type="video/mp4" />
-</video>
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover opacity-60"
+        >
+          <source src="/loop.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-[#0024E0] mix-blend-color pointer-events-none z-20" />
       </motion.div>
 
