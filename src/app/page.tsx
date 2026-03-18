@@ -26,10 +26,10 @@ const DJ_DATA = {
     "/photos/brunchboy-8.jpg"
   ],
   mixes: [
-    { id: 1, title: "UKG WARMUP!", type: "UK GARAGE, HOUSE", date: "FEB 9", duration: "48:52", cover: "/photos/ukg-mix.gif", audioSrc: "/audio/ukg-mix.mp3" },
-    { id: 2, title: "MARCH HOUSE FINDS", type: "ELECTRO FUNK, HOUSE", date: "MAR 12", duration: "27:48", cover: "/photos/electro-funky-house.gif", audioSrc: "/audio/electro-funky-house.mp3" },
-    { id: 3, title: "POCKET GROOVES", type: "JAZZ & SOULFUL HOUSE", date: "MAR 14", duration: "50:29", cover: "/photos/jazzy-soulful.gif", audioSrc: "/audio/jazzy-soulful.mp3" },
-    { id: 4, title: "R&B @ MoMa", type: "R&B, EDITS", date: "MAR 14", duration: "23:54", cover: "/photos/moma-rnb.gif", audioSrc: "/audio/moma-rnb.mp3" },
+    { id: 1, title: "UKG WARMUP!", type: "UK GARAGE, HOUSE", date: "FEB 9", duration: "48:52", cover: "/photos/ukg-mix.gif", audioSrc: "https://jocrmhdrpfnspllelvkz.supabase.co/storage/v1/object/public/mixes/ukg-mix.mp3" },
+    { id: 2, title: "MARCH HOUSE FINDS", type: "ELECTRO FUNK, HOUSE", date: "MAR 12", duration: "27:48", cover: "/photos/electro-funky-house.gif", audioSrc: "https://jocrmhdrpfnspllelvkz.supabase.co/storage/v1/object/public/mixes/electro-funky-house.mp3" },
+    { id: 3, title: "POCKET GROOVES", type: "JAZZ & SOULFUL HOUSE", date: "MAR 14", duration: "50:29", cover: "/photos/jazzy-soulful.gif", audioSrc: "https://jocrmhdrpfnspllelvkz.supabase.co/storage/v1/object/public/mixes/jazzy-soulful.mp3" },
+    { id: 4, title: "R&B @ MoMa", type: "R&B, EDITS", date: "MAR 14", duration: "23:54", cover: "/photos/moma-rnb.gif", audioSrc: "https://jocrmhdrpfnspllelvkz.supabase.co/storage/v1/object/public/mixes/moma-rnb.mp3" },
   ],
   videoMixes: [
     { id: 'v1', title: "LET THEM COOK: B2B WITH LIMMY", url: "https://www.youtube.com/embed/Gicls7ocdrc?si=EES7r1N0bGoNO6QB" },
@@ -39,22 +39,24 @@ const DJ_DATA = {
     { id: 'p1', title: "BASEMENT GROOVES", type: "Deep & Dubby", url: "https://open.spotify.com/embed/playlist/4KM1376v9QAISMrGm5hWax?utm_source=generator" },
     { id: 'p2', title: "EARLY INFLUENCE", type: "Groovy & Soulful", url: "https://open.spotify.com/embed/playlist/3ri9kAoJT1njK4Er2ihoQV?utm_source=generator" },
   ],
+  devProjects: [
+    {
+      name: "afterfiveph",
+      url: "https://afterfiveph.vercel.app",
+      description: "Automatically aggregates gig posters from Instagram and displays them in a curated nightlife directory.",
+      stack: ["Next.js", "Node.js", "Tailwind CSS", "Supabase", "Vercel"],
+      image: "/photos/dev-1.jpg"
+    }
+  ],
   contact: { email: "aaronalagban@gmail.com", ig: "aaronalagbann" }
 };
 
-const NAV_ITEMS = ['about', 'mixes', 'gigs', 'photos', 'contact'];
-const COLORS = ['#FF3300', '#CCFF00', '#000000', '#FFFFFF', '#0024E0'];
+const NAV_ITEMS = ['about', 'mixes', 'gigs', 'photos', 'contact', 'dev'];
 
-// --- CUSTOM BRUTALIST GRAPHICS ---
+// --- GRAPHICS ---
 const ConcentricSquares = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 100 100" className={className}>
     {[0, 10, 20, 30, 40].map(i => <rect key={i} x={i} y={i} width={100 - i * 2} height={100 - i * 2} fill="none" stroke="currentColor" strokeWidth="3" />)}
-  </svg>
-);
-
-const OpticalRays = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 100 100" className={className}>
-    {[0, 20, 40, 60, 80, 100, 120, 140, 160].map(deg => <line key={deg} x1="50" y1="50" x2="50" y2="-50" stroke="currentColor" strokeWidth="4" transform={`rotate(${deg} 50 50)`} />)}
   </svg>
 );
 
@@ -71,20 +73,20 @@ const SharpStarburst = ({ className }: { className?: string }) => (
 );
 
 const MotionGrid = () => (
-  <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.05] mix-blend-overlay overflow-hidden">
+  <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.08] mix-blend-overlay overflow-hidden">
     <motion.div animate={{ backgroundPosition: ['0px 0px', '100px 100px'] }} transition={{ repeat: Infinity, duration: 20, ease: "linear" }} className="w-full h-full" style={{ backgroundImage: 'radial-gradient(circle, #fff 2px, transparent 2.5px)', backgroundSize: '40px 40px' }} />
   </div>
 );
 
 const AppBackgroundShapes = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 60, ease: "linear" }} className="absolute -top-[10vw] -right-[10vw] w-[80vw] h-[80vw] md:w-[50vw] md:h-[50vw] text-[#CCFF00] opacity-[0.08] mix-blend-screen">
+    <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 60, ease: "linear" }} className="absolute -top-[10vw] -right-[10vw] w-[80vw] h-[80vw] md:w-[50vw] md:h-[50vw] text-[#CCFF00] opacity-[0.25] mix-blend-screen">
       <SharpStarburst className="w-full h-full" />
     </motion.div>
-    <motion.div animate={{ rotate: -360 }} transition={{ repeat: Infinity, duration: 90, ease: "linear" }} className="absolute top-[30vh] -left-[20vw] w-[100vw] h-[100vw] md:w-[60vw] md:h-[60vw] text-[#FF3300] opacity-[0.06] mix-blend-screen">
+    <motion.div animate={{ rotate: -360 }} transition={{ repeat: Infinity, duration: 90, ease: "linear" }} className="absolute top-[30vh] -left-[20vw] w-[100vw] h-[100vw] md:w-[60vw] md:h-[60vw] text-[#FF3300] opacity-[0.2] mix-blend-screen">
       <ConcentricSquares className="w-full h-full" />
     </motion.div>
-    <motion.div animate={{ rotate: 180, scale: [1, 1.1, 1] }} transition={{ rotate: { repeat: Infinity, duration: 40, ease: "linear" }, scale: { repeat: Infinity, duration: 10, ease: "easeInOut" } }} className="absolute -bottom-[10vw] right-[10vw] w-[90vw] h-[90vw] md:w-[45vw] md:h-[45vw] text-white opacity-[0.05] mix-blend-screen">
+    <motion.div animate={{ rotate: 180, scale: [1, 1.1, 1] }} transition={{ rotate: { repeat: Infinity, duration: 40, ease: "linear" }, scale: { repeat: Infinity, duration: 10, ease: "easeInOut" } }} className="absolute -bottom-[10vw] right-[10vw] w-[90vw] h-[90vw] md:w-[45vw] md:h-[45vw] text-white opacity-[0.15] mix-blend-screen">
       <BrutalistStar className="w-full h-full" />
     </motion.div>
   </div>
@@ -100,7 +102,39 @@ const FunkyVisualizer = ({ isPlaying }: { isPlaying: boolean }) => {
   );
 };
 
-// FIX FOR VERCEL TYPESCRIPT BUILD
+// --- LOADER GEOMETRIC FRAMES ---
+const LoaderFrames = [
+  <div key="frame0" className="w-full h-full grid grid-cols-4 grid-rows-4">
+    {Array.from({length: 16}).map((_, i) => <div key={i} className={(i + Math.floor(i/4)) % 2 === 0 ? "bg-[#CCFF00]" : "bg-black"} />)}
+  </div>,
+  <div key="frame1" className="w-full h-full flex flex-col">
+    {Array.from({length: 8}).map((_, i) => <div key={i} className={`flex-1 ${i % 2 === 0 ? "bg-[#0024E0]" : "bg-white"}`} />)}
+  </div>,
+  <div key="frame2" className="w-full h-full bg-[#FF3300] flex items-center justify-center overflow-hidden">
+    <svg viewBox="0 0 100 100" className="w-[150vmin] h-[150vmin] text-[#CCFF00]">
+      {[10, 20, 30, 40, 50].map((r, i) => <circle key={i} cx="50" cy="50" r={50 - r} fill={i % 2 === 0 ? "currentColor" : "#FF3300"} />)}
+    </svg>
+  </div>,
+  <div key="frame3" className="w-full h-full bg-black flex items-center justify-center overflow-hidden">
+    <svg viewBox="0 0 100 100" className="w-[200vmin] h-[200vmin] text-[#FF3300] animate-spin-slow" style={{ animationDuration: '10s' }}>
+      {[...Array(16)].map((_, i) => <polygon key={i} points="50,50 48,0 52,0" fill="currentColor" transform={`rotate(${i * 22.5} 50 50)`} />)}
+    </svg>
+  </div>,
+  <div key="frame4" className="w-full h-full bg-white relative overflow-hidden">
+    <div className="absolute top-0 left-0 w-full h-1/2 bg-[#0024E0] rounded-b-full scale-150 transform origin-top" />
+  </div>,
+  <div key="frame5" className="w-full h-full bg-[#CCFF00]" style={{ backgroundImage: 'radial-gradient(circle, black 30%, transparent 31%)', backgroundSize: '8vmin 8vmin' }} />,
+  <div key="frame6" className="w-full h-full overflow-hidden relative bg-black">
+    <div className="absolute inset-0 bg-[#FF3300] transform -skew-y-45 origin-bottom-left" />
+  </div>,
+  <div key="frame7" className="w-full h-full bg-white relative">
+    <div className="absolute top-[10%] left-[20%] w-[40%] h-[30%] bg-[#0024E0]" />
+    <div className="absolute bottom-[20%] right-[10%] w-[30%] h-[40%] bg-[#CCFF00] rounded-full" />
+    <div className="absolute top-[40%] right-[30%] w-[20%] h-[20%] bg-[#FF3300] rotate-45" />
+    <div className="absolute bottom-[10%] left-[10%] w-[50%] h-[15%] bg-black" />
+  </div>
+];
+
 const SMOOTH_EASE: [number, number, number, number] = [0.76, 0, 0.24, 1];
 
 const staggerContainer = {
@@ -108,21 +142,16 @@ const staggerContainer = {
   show: { opacity: 1, transition: { staggerChildren: 0.05 } }
 };
 
-// FIX FOR VERCEL TYPESCRIPT BUILD
 const itemVariant: Variants = {
   hidden: { opacity: 0, y: 20 },
   show: { 
     opacity: 1, 
     y: 0, 
-    transition: { 
-      type: "spring" as const,
-      stiffness: 100, 
-      damping: 15 
-    } 
+    transition: { type: "spring" as const, stiffness: 100, damping: 15 } 
   }
 };
 
-// --- MAIN COMPONENT ---
+// --- main shiiiiii ---
 export default function DJPortfolio() {
   const [appState, setAppState] = useState('loading'); 
   const [activeView, setActiveView] = useState('about');
@@ -219,6 +248,12 @@ export default function DJPortfolio() {
     setIsPlaying(true);
   };
 
+  const closePlayer = () => {
+    if (audioRef.current) audioRef.current.pause();
+    setCurrentMix(null);
+    setIsPlaying(false);
+  };
+
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!audioRef.current) return;
     const rect = e.currentTarget.getBoundingClientRect();
@@ -226,13 +261,44 @@ export default function DJPortfolio() {
     audioRef.current.currentTime = pos * audioRef.current.duration;
   };
 
+  // Robust Clipboard Fallback for local testing (HTTP bypass)
+  const copyToClipboard = async (text: string) => {
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+    } catch (e) {
+      console.warn("Clipboard API failed, using fallback", e);
+    }
+    // Fallback for HTTP (local testing on phone)
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+    } catch (err) {
+      console.error('Fallback: Oops, unable to copy', err);
+    }
+    document.body.removeChild(textArea);
+  };
+
   const handleIGBooking = async () => {
     const message = `Hey Aaron! We want to book BRUNCHBOY.\n\nVenue: ${booking.venue || '[Venue]'}\nDate: ${booking.date || '[Date]'}\nVibe: ${booking.vibe || '[Vibe]'}`;
-    try {
-      await navigator.clipboard.writeText(message);
-      setCopied(true);
-      setTimeout(() => { setCopied(false); window.open(`https://ig.me/m/${DJ_DATA.contact.ig}`, '_blank'); }, 1500);
-    } catch (err) { window.open(`https://ig.me/m/${DJ_DATA.contact.ig}`, '_blank'); }
+    
+    await copyToClipboard(message);
+    setCopied(true);
+    
+    // Guaranteed 2.5s wait before routing so they can read "COPIED!"
+    setTimeout(() => { 
+      setCopied(false); 
+      window.open(`https://ig.me/m/${DJ_DATA.contact.ig}`, '_blank'); 
+    }, 2500);
   };
 
   return (
@@ -268,23 +334,21 @@ export default function DJPortfolio() {
         <div className="absolute inset-0 bg-[#0024E0] mix-blend-color pointer-events-none z-20" />
       </motion.div>
 
-      {/* LOADER */}
+      {/* GEOMETRIC FLASH LOADER */}
       <AnimatePresence>
         {appState === 'loading' && (
-          <motion.div key="loading" exit={{ y: '-100%' }} transition={{ duration: 0.6, ease: SMOOTH_EASE }} className="absolute inset-0 z-[100] bg-[#0024E0] text-white flex flex-col justify-between p-8 border-[16px] border-[#CCFF00]">
-            <div className="flex justify-between items-start">
-              <span className="text-4xl font-black uppercase">BRUNCHBOY</span>
-              <span className="text-4xl font-black">{Math.min(100, loaderTick * 7)}%</span>
+          <motion.div 
+            key="loading" 
+            exit={{ opacity: 0 }} 
+            transition={{ duration: 0.3, ease: SMOOTH_EASE }} 
+            className="absolute inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden"
+          >
+            {/* Top Left Branding */}
+            <div className="absolute top-4 left-4 md:top-6 md:left-6 z-[110] text-white">
+              <span className="font-black tracking-tighter text-sm md:text-base leading-none drop-shadow-md">BRUNCHBOY</span>
             </div>
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none mix-blend-difference opacity-80">
-              {loaderTick % 4 === 0 && <ConcentricSquares className="w-[80vw] h-[80vw] text-white" />}
-              {loaderTick % 4 === 1 && <OpticalRays className="w-[80vw] h-[80vw] text-[#CCFF00]" />}
-              {loaderTick % 4 === 2 && <BrutalistStar className="w-[80vw] h-[80vw] text-[#FF3300]" />}
-              {loaderTick % 4 === 3 && <h1 className="text-[20vw] font-black leading-none uppercase text-center text-white">SOUND<br/>TEST</h1>}
-            </div>
-            <div className="grid grid-cols-4 gap-4 h-16 w-full mt-auto">
-              {COLORS.slice(0, 4).map((c, i) => <motion.div key={i} animate={{ opacity: loaderTick % 2 === 0 ? 1 : 0.2 }} className="h-full w-full" style={{ backgroundColor: c }} />)}
-            </div>
+            {/* Flash Frames */}
+            {LoaderFrames[loaderTick % LoaderFrames.length]}
           </motion.div>
         )}
       </AnimatePresence>
@@ -315,23 +379,30 @@ export default function DJPortfolio() {
               <motion.div key="app" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="flex flex-col flex-1 h-full w-full pointer-events-auto relative">
                 
                 <header className="flex-shrink-0 flex items-center h-[80px] border-b-4 border-white bg-[#0024E0] relative z-20">
-                  <button onClick={() => setAppState('landing')} className="h-full px-6 border-r-4 border-white hover:bg-[#FF3300] hover:text-white transition-colors flex items-center justify-center">
+                  <button onClick={() => setAppState('landing')} className="h-full px-6 border-r-4 border-white hover:bg-[#FF3300] hover:text-white transition-colors flex items-center justify-center z-20">
                     <ArrowLeft size={32} strokeWidth={3} />
                   </button>
-                  <nav className="flex-1 flex overflow-x-auto hide-scrollbar h-full">
-                    {NAV_ITEMS.map((item) => (
-                      <button key={item} onClick={() => setActiveView(item)} className={`px-6 md:px-10 h-full border-r-4 border-white text-xl md:text-3xl font-black tracking-tighter flex items-center transition-colors relative whitespace-nowrap ${activeView === item ? 'bg-[#CCFF00] text-black' : 'hover:bg-white hover:text-black'}`}>
-                        {item}
-                        {activeView === item && <motion.div layoutId="nav-dot" className="absolute bottom-2 right-2 w-3 h-3 bg-black rounded-full" />}
-                      </button>
-                    ))}
-                  </nav>
+                  <div className="flex-1 h-full relative overflow-hidden">
+                    <nav className="flex items-center overflow-x-auto hide-scrollbar h-full w-full">
+                      {NAV_ITEMS.map((item) => (
+                        <button key={item} onClick={() => setActiveView(item)} className={`px-6 md:px-10 h-full border-r-4 border-white text-xl md:text-3xl font-black tracking-tighter flex items-center transition-colors relative whitespace-nowrap ${activeView === item ? 'bg-[#CCFF00] text-black' : 'hover:bg-white hover:text-black'}`}>
+                          {item}
+                          {activeView === item && <motion.div layoutId="nav-dot" className="absolute bottom-2 right-2 w-3 h-3 bg-black rounded-full" />}
+                        </button>
+                      ))}
+                      {/* Invisible Spacer for mobile hint margin */}
+                      <div className="min-w-[40px] md:hidden h-full shrink-0" />
+                    </nav>
+                    {/* Visual fade hint on mobile to show horizontal scrollability */}
+                    <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#0024E0] to-transparent pointer-events-none md:hidden z-10" />
+                  </div>
                 </header>
 
                 <div className="absolute left-0 right-0 bottom-0 transition-all duration-500 z-10 bg-transparent" style={{ top: '80px' }}>
                   <MotionGrid />
                   
-                  <motion.div initial={false} animate={{ opacity: activeView === 'about' ? 0 : 1 }} transition={{ duration: 0.5 }} className="absolute inset-0 pointer-events-none z-0">
+                  {/* Background shapes hidden for dev view to preserve clean dashboard look */}
+                  <motion.div initial={false} animate={{ opacity: (activeView === 'about' || activeView === 'dev') ? 0 : 1 }} transition={{ duration: 0.5 }} className="absolute inset-0 pointer-events-none z-0">
                     <AppBackgroundShapes />
                   </motion.div>
 
@@ -477,15 +548,15 @@ export default function DJPortfolio() {
                           </motion.div>
                         )}
 
-                        {/* Venues Played Tab */}
+                        {/* Venues Played Tab - FIXED: using grid instead of columns to prevent reflow jitter */}
                         {gigTab === 'venues' && (
-                          <motion.div variants={staggerContainer} initial="hidden" animate="show" className="columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-3 md:gap-4 pb-24">
+                          <motion.div variants={staggerContainer} initial="hidden" animate="show" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4 pb-24 auto-rows-max">
                             {DJ_DATA.venues.map((venue, i) => {
                               const [name, location] = venue.split(', ');
                               return (
-                                <motion.div variants={itemVariant} key={`venue-${i}`} className="flex flex-col items-start gap-1 mb-3 md:mb-4 bg-[#0024E0]/50 backdrop-blur-sm p-3 md:p-4 border-2 border-white/30 cursor-default">
+                                <motion.div variants={itemVariant} key={`venue-${i}`} className="flex flex-col items-start gap-1 bg-[#0024E0]/50 backdrop-blur-sm p-3 md:p-4 border-2 border-white/30 cursor-default h-full">
                                   <span className="text-lg md:text-xl font-black tracking-tighter text-white leading-none break-words whitespace-normal">{name}</span>
-                                  <span className="text-[10px] md:text-xs font-bold text-[#CCFF00] uppercase tracking-widest">{location}</span>
+                                  <span className="text-[10px] md:text-xs font-bold text-[#CCFF00] uppercase tracking-widest mt-auto pt-1">{location}</span>
                                 </motion.div>
                               );
                             })}
@@ -512,39 +583,137 @@ export default function DJPortfolio() {
                       </PageWrapper>
                     )}
 
-                    {/* CONTACT VIEW */}
+                    {/* CONTACT VIEW - 2-Column Split, Mobile Friendly Brutalist */}
                     {activeView === 'contact' && (
-                      <PageWrapper key="contact" title="CONTACT">
-                        <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.4 }} className="bg-[#CCFF00] text-black border-4 border-black p-4 sm:p-6 md:p-12 relative shadow-[8px_8px_0_0_#000] md:shadow-[16px_16px_0_0_#000] flex flex-col min-h-[60vh] justify-center mt-4 mb-24 lg:w-3/4 mx-auto overflow-hidden">
-                          <div className="border-b-4 border-black pb-4 mb-8 shrink-0">
-                            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter break-words whitespace-normal leading-none">BOOKING_REQUEST</h2>
-                            <p className="text-base sm:text-lg font-bold uppercase mt-2">REF NO: {Math.floor(Math.random()*89999+10000)}</p>
-                          </div>
-                          <div className="flex flex-col gap-8 md:gap-10 text-lg sm:text-xl md:text-3xl font-black tracking-tighter flex-1 justify-center w-full">
-                            <div className="flex flex-col md:flex-row md:items-end gap-2 group w-full">
-                              <span className="shrink-0">VENUE:</span>
-                              <input type="text" value={booking.venue} onChange={(e) => setBooking({...booking, venue: e.target.value})} className="bg-transparent border-b-4 border-black outline-none w-full text-[#0024E0] px-2 focus:bg-white transition-colors min-w-0" />
+                      <PageWrapper key="contact" title="CONTACT" noScroll={false}>
+                        <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.4 }} className="border-4 border-black shadow-[8px_8px_0_0_#000] md:shadow-[12px_12px_0_0_#000] flex flex-col md:flex-row w-full max-w-5xl mx-auto mb-12 min-h-[400px]">
+                          
+                          {/* LEFT SIDE - Info Box */}
+                          <div className="w-full md:w-5/12 border-b-4 md:border-b-0 md:border-r-4 border-black p-6 md:p-10 flex flex-col justify-between bg-black text-white shrink-0">
+                            <div>
+                              <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.85] mb-4 break-words text-[#CCFF00]">BOOKING<br/>REQUEST</h2>
+                              <p className="font-bold text-sm md:text-base uppercase max-w-[250px] text-white/80 leading-tight">Slide the details over and let's make it happen.</p>
                             </div>
-                            <div className="flex flex-col md:flex-row md:items-end gap-2 group w-full">
-                              <span className="shrink-0">DATE:</span>
-                              <input type="text" value={booking.date} onChange={(e) => setBooking({...booking, date: e.target.value})} className="bg-transparent border-b-4 border-black outline-none w-full text-[#FF3300] px-2 focus:bg-white transition-colors min-w-0" />
-                            </div>
-                            <div className="flex flex-col md:flex-row md:items-end gap-2 group w-full">
-                              <span className="shrink-0">VIBE:</span>
-                              <input type="text" value={booking.vibe} onChange={(e) => setBooking({...booking, vibe: e.target.value})} className="bg-transparent border-b-4 border-black outline-none w-full text-[#0024E0] px-2 focus:bg-white transition-colors min-w-0" />
+                            <div className="mt-8 md:mt-0">
+                              <span className="bg-[#CCFF00] text-black font-black text-xs md:text-sm px-3 py-1.5 uppercase tracking-widest inline-block">
+                                REF: {Math.floor(Math.random()*89999+10000)}
+                              </span>
                             </div>
                           </div>
-                          <div className="mt-12 flex flex-col md:flex-row gap-4 md:gap-6 shrink-0 w-full">
-                            <button onClick={handleIGBooking} disabled={copied} className={`flex-grow border-4 border-black px-4 sm:px-6 py-4 text-lg sm:text-xl md:text-2xl font-black hover:-translate-y-1 hover:shadow-[8px_8px_0_0_#000] active:translate-y-0 active:shadow-none transition-all flex justify-between items-center break-words whitespace-normal leading-none ${copied ? 'bg-white text-black' : 'bg-[#FF3300] text-white'}`}>
-                              {copied ? 'ROUTING TO IG...' : 'SEND TO INSTAGRAM'} <ArrowUpRight size={28} className="shrink-0 ml-2" />
-                            </button>
-                            <a href={`mailto:${DJ_DATA.contact.email}`} className="border-4 border-black px-4 sm:px-6 py-4 text-lg sm:text-xl md:text-2xl font-black bg-white hover:bg-black hover:text-white transition-colors flex items-center justify-center text-center break-all whitespace-normal">
-                              EMAIL
-                            </a>
+
+                          {/* RIGHT SIDE - Form Box */}
+                          <div className="w-full md:w-7/12 p-6 md:p-10 flex flex-col bg-[#CCFF00] text-black shrink-0">
+                            <div className="flex flex-col gap-6 flex-1 mb-8 md:mb-12">
+                              {/* Venue Input */}
+                              <div className="flex flex-col gap-1 group">
+                                <label className="text-sm font-black tracking-widest uppercase opacity-60">1. Venue</label>
+                                <input type="text" value={booking.venue} onChange={(e) => setBooking({...booking, venue: e.target.value})} className="bg-transparent border-b-4 border-black/20 outline-none w-full text-2xl md:text-3xl font-black tracking-tighter text-[#0024E0] pb-1 focus:border-black placeholder:text-black/20 transition-colors rounded-none" placeholder="Where is it at?" />
+                              </div>
+                              
+                              {/* Date Input */}
+                              <div className="flex flex-col gap-1 group">
+                                <label className="text-sm font-black tracking-widest uppercase opacity-60">2. Date</label>
+                                <input type="text" value={booking.date} onChange={(e) => setBooking({...booking, date: e.target.value})} className="bg-transparent border-b-4 border-black/20 outline-none w-full text-2xl md:text-3xl font-black tracking-tighter text-[#FF3300] pb-1 focus:border-black placeholder:text-black/20 transition-colors rounded-none" placeholder="MM/DD/YY" />
+                              </div>
+                              
+                              {/* Vibe Input */}
+                              <div className="flex flex-col gap-1 group">
+                                <label className="text-sm font-black tracking-widest uppercase opacity-60">3. Vibe</label>
+                                <input type="text" value={booking.vibe} onChange={(e) => setBooking({...booking, vibe: e.target.value})} className="bg-transparent border-b-4 border-black/20 outline-none w-full text-2xl md:text-3xl font-black tracking-tighter text-[#0024E0] pb-1 focus:border-black placeholder:text-black/20 transition-colors rounded-none" placeholder="What's the energy?" />
+                              </div>
+                            </div>
+                            
+                            {/* Action Buttons */}
+                            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 shrink-0 w-full mt-auto">
+                              <button onClick={handleIGBooking} disabled={copied} className={`flex-1 border-4 border-black px-4 py-4 md:py-5 text-lg sm:text-xl md:text-2xl font-black hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#000] active:translate-y-0 active:shadow-none transition-all flex justify-between items-center leading-none uppercase ${copied ? 'bg-white text-black' : 'bg-[#FF3300] text-white'}`}>
+                                <span className="truncate pr-2">{copied ? 'COPIED! PASTE IN DMS' : 'SEND TO INSTAGRAM'}</span>
+                                <ArrowUpRight size={28} className="shrink-0" />
+                              </button>
+                              <a href={`mailto:${DJ_DATA.contact.email}?subject=Booking Request BRUNCHBOY&body=Venue: ${booking.venue}%0D%0ADate: ${booking.date}%0D%0AVibe: ${booking.vibe}`} className="border-4 border-black px-6 py-4 md:py-5 text-lg sm:text-xl md:text-2xl font-black bg-white hover:bg-black hover:text-white hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#000] transition-all flex items-center justify-center shrink-0">
+                                EMAIL
+                              </a>
+                            </div>
                           </div>
+                          
                         </motion.div>
                       </PageWrapper>
                     )}
+
+                    {/* DEV VIEW - BRAND GREEN/BLACK TECH DASHBOARD */}
+                    {activeView === 'dev' && (
+                      <motion.div 
+                        key="dev" 
+                        initial={{ opacity: 0, y: 20 }} 
+                        animate={{ opacity: 1, y: 0 }} 
+                        exit={{ opacity: 0, y: -20 }} 
+                        transition={{ duration: 0.4 }} 
+                        className="absolute inset-0 z-30 flex flex-col overflow-hidden bg-black text-[#CCFF00] uppercase tracking-normal"
+                      >
+                        {/* Minimalist Top Bar */}
+                        <div className="flex-shrink-0 bg-black border-b border-[#CCFF00]/30 px-4 md:px-6 h-[50px] md:h-[60px] flex items-center justify-between z-20">
+                           <div className="flex items-center gap-2 md:gap-3">
+                             <div className="w-2 h-2 rounded-full bg-[#CCFF00] animate-pulse" />
+                             <span className="font-mono text-[10px] md:text-xs text-[#CCFF00]/60 tracking-widest">System_Status: Online</span>
+                           </div>
+                           <span className="font-mono text-[10px] md:text-xs text-[#CCFF00]/60">v1.0.4</span>
+                        </div>
+
+                        <div className="flex-1 w-full overflow-y-auto p-4 sm:p-6 md:p-12 dev-scrollbar relative">
+                          <div className="max-w-[1000px] mx-auto w-full pb-32">
+                             
+                             <div className="mb-8 md:mb-12">
+                               <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter mb-2 md:mb-4">DEVELOPMENT</h2>
+                               <p className="font-mono text-xs md:text-sm text-[#CCFF00]/70 normal-case">Showcase of web applications, platforms, and digital experiences.</p>
+                             </div>
+
+                             {DJ_DATA.devProjects.map((proj, i) => (
+                               <motion.div 
+                                 variants={itemVariant} 
+                                 initial="hidden" 
+                                 animate="show"
+                                 key={i} 
+                                 className="group rounded-xl border border-[#CCFF00]/30 bg-black overflow-hidden hover:border-[#CCFF00] transition-all duration-300 shadow-[0_10px_30px_rgba(204,255,0,0.1)] hover:shadow-[0_10px_40px_rgba(204,255,0,0.2)] flex flex-col sm:flex-row"
+                               >
+                                 {/* Image Section */}
+                                 <div className="w-full sm:w-2/5 sm:min-w-[250px] md:min-w-[300px] h-48 sm:h-auto relative overflow-hidden bg-black border-b sm:border-b-0 sm:border-r border-[#CCFF00]/30 p-6 flex items-center justify-center">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-[#CCFF00]/10 to-transparent pointer-events-none" />
+                                    <img src={proj.image} alt={proj.name} className="w-full h-full object-contain sm:object-cover scale-95 group-hover:scale-100 transition-transform duration-500 opacity-80 group-hover:opacity-100" />
+                                 </div>
+                                 
+                                 {/* Content Section */}
+                                 <div className="p-5 sm:p-6 md:p-8 flex flex-col flex-1 min-w-0 bg-[#0a0a00]">
+                                   <div className="flex justify-between items-start mb-3 md:mb-4">
+                                     <h3 className="text-2xl sm:text-3xl font-black tracking-tighter text-[#CCFF00] truncate pr-4">
+                                       {proj.name}
+                                     </h3>
+                                     <a href={proj.url} target="_blank" rel="noreferrer" className="shrink-0 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#CCFF00]/10 hover:bg-[#CCFF00] hover:text-black transition-colors border border-[#CCFF00]/30 group/link">
+                                       <ArrowUpRight size={18} className="group-hover/link:scale-110 transition-transform md:w-5 md:h-5" />
+                                     </a>
+                                   </div>
+                                   
+                                   {/* Notice normal-case to make the description highly readable */}
+                                   <p className="text-[#CCFF00]/80 mb-6 md:mb-8 text-sm md:text-base leading-relaxed font-medium normal-case break-words whitespace-normal">
+                                     {proj.description}
+                                   </p>
+
+                                   <div className="mt-auto">
+                                     <h4 className="font-mono text-[10px] md:text-xs text-[#CCFF00]/50 mb-2 md:mb-3 uppercase tracking-widest">Tech Stack</h4>
+                                     <div className="flex flex-wrap gap-1.5 md:gap-2">
+                                       {proj.stack.map((tech, idx) => (
+                                         <span key={idx} className="px-2.5 py-1 md:px-3 md:py-1 rounded-full bg-[#CCFF00]/5 border border-[#CCFF00]/20 text-[10px] md:text-xs font-mono text-[#CCFF00]/90 hover:bg-[#CCFF00]/20 hover:border-[#CCFF00]/50 transition-colors cursor-default normal-case">
+                                           {tech}
+                                         </span>
+                                       ))}
+                                     </div>
+                                   </div>
+                                 </div>
+                               </motion.div>
+                             ))}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+
                   </AnimatePresence>
                 </div>
               </motion.div>
@@ -553,7 +722,7 @@ export default function DJPortfolio() {
         </main>
       </LayoutGroup>
 
-      {/* FULL SCREEN EXPANDED VIDEO OVERLAY WITH 80vh CONSTRAINT */}
+      {/* FULL SCREEN EXPANDED VIDEO OVERLAY */}
       <AnimatePresence>
         {expandedVideo && (
           <motion.div 
@@ -583,7 +752,7 @@ export default function DJPortfolio() {
         )}
       </AnimatePresence>
 
-      {/* MINI PLAYER (Bottom Middle) */}
+      {/* SPOTIFY STYLE MINI PLAYER */}
       <AnimatePresence>
         {currentMix && (
           <motion.div
@@ -593,52 +762,62 @@ export default function DJPortfolio() {
               y: 0, 
               opacity: 1,
               bottom: appState === 'landing' ? 24 : 32,
-              left: appState === 'landing' ? 24 : "50%",
-              x: appState === 'landing' ? "0%" : "-50%",
-              width: appState === 'landing' ? 260 : "95%",
-              maxWidth: appState === 'landing' ? 260 : 700,
-              borderRadius: 999,
-              borderWidth: 2,
+              left: "50%",
+              x: "-50%",
+              width: appState === 'landing' ? 240 : "95%",
+              maxWidth: appState === 'landing' ? 240 : 440,
             }}
             exit={{ y: 150, opacity: 0, x: "-50%" }}
             transition={{ duration: 0.5, ease: SMOOTH_EASE }}
-            className={`absolute z-[100] bg-black text-white border-white overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.8)]`}
+            className="absolute z-[150] bg-[#121212] border border-white/10 rounded-xl overflow-hidden shadow-2xl flex flex-col pointer-events-auto"
           >
-            <div className="relative w-full h-[64px] flex items-center">
+            <div className="flex items-center p-2 gap-3 w-full">
+              {/* Left: Album Art */}
+              <div className="w-10 h-10 rounded-sm shrink-0 overflow-hidden bg-black relative">
+                 <img src={currentMix.cover} className={`w-full h-full object-cover ${isPlaying ? 'opacity-100' : 'opacity-70 grayscale'}`} alt="cover" />
+                 {appState === 'landing' && isPlaying && (
+                   <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                     <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 3, ease: "linear" }} className="w-4 h-4 rounded-full border-2 border-t-[#CCFF00] border-r-[#CCFF00] border-b-transparent border-l-transparent" />
+                   </div>
+                 )}
+              </div>
               
-              {/* Interactive Background Progress Bar */}
-              <div 
-                className="absolute inset-0 w-full h-full cursor-pointer z-0 group" 
-                onClick={handleSeek}
-              >
-                <div className="absolute top-0 left-0 h-full bg-[#CCFF00]/20 pointer-events-none transition-all duration-100 ease-linear" style={{ width: `${progress}%` }} />
-                <div className="absolute top-0 left-0 h-full bg-white/5 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity" />
+              {/* Middle: Info */}
+              <div className="flex flex-col flex-1 min-w-0">
+                 <span className="text-sm font-bold text-white truncate leading-tight tracking-normal capitalize" style={{ fontFamily: 'system-ui, sans-serif' }}>{currentMix.title}</span>
+                 <span className="text-xs text-white/60 truncate leading-tight tracking-normal capitalize" style={{ fontFamily: 'system-ui, sans-serif' }}>{appState === 'landing' ? 'Now Playing' : currentMix.type}</span>
               </div>
 
-              {/* Player Controls */}
-              <div className="h-full flex items-center shrink-0 border-r-2 border-white z-10 bg-black">
-                <button onClick={playPrev} className="h-full px-3 md:px-4 text-white hover:text-[#CCFF00] hover:bg-white/10 transition-colors hidden sm:flex items-center justify-center">
-                   <SkipBack size={20} fill="currentColor" />
-                </button>
-                <button onClick={() => togglePlay(currentMix)} className="h-full px-5 md:px-6 bg-[#CCFF00] text-black hover:bg-white transition-colors flex items-center justify-center">
-                  {isPlaying ? <Pause size={24} fill="currentColor" /> : <Play size={24} fill="currentColor" />}
-                </button>
-                <button onClick={playNext} className="h-full px-3 md:px-4 text-white hover:text-[#CCFF00] hover:bg-white/10 transition-colors hidden sm:flex items-center justify-center">
-                   <SkipForward size={20} fill="currentColor" />
-                </button>
-              </div>
-              
-              {/* Track Info */}
-              <div className="flex-1 px-4 flex items-center justify-between overflow-hidden relative z-10 pointer-events-none">
-                 <div className="flex flex-col min-w-0 pr-2">
-                   <span className="font-black text-sm md:text-base truncate leading-none mb-1 text-white">{currentMix.title}</span>
-                   <span className="font-bold text-[10px] md:text-xs text-[#CCFF00] uppercase truncate tracking-widest">{appState === 'landing' ? 'NOW PLAYING' : currentMix.type}</span>
-                 </div>
-                 <div className="hidden md:flex flex-col items-end shrink-0">
-                    <span className="font-black text-xs text-white/40 tracking-widest">[ AUDIO RUNNING ]</span>
-                 </div>
-              </div>
+              {/* Right: Controls (Hidden on Landing) */}
+              {appState !== 'landing' && (
+                <div className="flex items-center gap-1 md:gap-2 pr-2 shrink-0">
+                  <button onClick={playPrev} className="text-white hover:text-[#CCFF00] transition-colors p-1">
+                     <SkipBack size={20} fill="currentColor" strokeWidth={0} />
+                  </button>
+                  <button onClick={() => togglePlay(currentMix)} className="text-white hover:scale-110 transition-transform p-1 mx-1">
+                    {isPlaying ? <Pause size={28} fill="currentColor" strokeWidth={0} /> : <Play size={28} fill="currentColor" strokeWidth={0} />}
+                  </button>
+                  <button onClick={playNext} className="text-white hover:text-[#CCFF00] transition-colors p-1">
+                     <SkipForward size={20} fill="currentColor" strokeWidth={0} />
+                  </button>
+                  
+                  {/* Divider and Close Player X */}
+                  <div className="w-px h-6 bg-white/20 mx-1 md:mx-2" />
+                  <button onClick={closePlayer} className="text-white hover:text-[#FF3300] transition-colors p-1 group">
+                     <X size={20} strokeWidth={2.5} className="group-hover:scale-110 transition-transform" />
+                  </button>
+                </div>
+              )}
             </div>
+
+            {/* Bottom: Progress Bar (Hidden on Landing) */}
+            {appState !== 'landing' && (
+               <div className="w-full h-1 bg-white/20 relative cursor-pointer group" onClick={handleSeek}>
+                  <div className="absolute top-0 left-0 h-full bg-white group-hover:bg-[#1db954] transition-colors duration-200 pointer-events-none" style={{ width: `${progress}%` }} />
+                  {/* Invisible expanded hit area for easier clicking */}
+                  <div className="absolute -top-2 left-0 right-0 h-4 bg-transparent" />
+               </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -649,12 +828,15 @@ export default function DJPortfolio() {
         .custom-scrollbar::-webkit-scrollbar { width: 12px; border-left: 4px solid white; background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: white; border: 2px solid #0024E0; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #CCFF00; }
+        .dev-scrollbar::-webkit-scrollbar { width: 12px; border-left: 1px solid rgba(204,255,0,0.2); background: black; }
+        .dev-scrollbar::-webkit-scrollbar-thumb { background: rgba(204,255,0,0.4); border: 1px solid black; }
+        .dev-scrollbar::-webkit-scrollbar-thumb:hover { background: #CCFF00; }
       `}} />
     </div>
   );
 }
 
-// Fixed Sticky Header PageWrapper to accept Subtitle
+// Fixed Sticky Header PageWrapper 
 const PageWrapper = ({ children, title, subtitle = '', noScroll = false, headerRight = null }: any) => (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4, ease: SMOOTH_EASE }} className="absolute inset-0 z-10 bg-transparent flex flex-col overflow-hidden">
     <div className="flex-shrink-0 z-20 bg-[#0024E0] pt-6 md:pt-12 pb-4 px-6 md:px-12 border-b-4 border-white shadow-xl">
@@ -667,7 +849,7 @@ const PageWrapper = ({ children, title, subtitle = '', noScroll = false, headerR
        </div>
     </div>
     <div className={`flex-1 w-full px-6 md:px-12 ${noScroll ? 'overflow-hidden' : 'overflow-y-auto custom-scrollbar'}`}>
-      <div className="max-w-[1400px] mx-auto w-full h-full pt-6 md:pt-12 pb-40">
+      <div className={`max-w-[1400px] mx-auto w-full h-full pt-6 md:pt-12 ${noScroll ? 'pb-6 md:pb-12' : 'pb-40'}`}>
          {children}
       </div>
     </div>
