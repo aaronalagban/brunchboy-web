@@ -43,7 +43,7 @@ const DJ_DATA = {
     {
       name: "afterfiveph",
       url: "https://afterfiveph.vercel.app",
-      description: "Automatically aggregates gig posters from Instagram and displays them in a curated nightlife directory.",
+      description: "A one-stop hub for discovering gigs, parties, and nightlife events around the city. Bringing together event posters from different venues and collectives so it’s easier to see what’s happening in the local scene.",
       stack: ["Next.js", "Node.js", "Tailwind CSS", "Supabase", "Vercel"],
       image: "/photos/dev-1.jpg"
     }
