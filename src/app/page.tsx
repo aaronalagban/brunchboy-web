@@ -164,9 +164,15 @@ export default function DJPortfolio() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  const [booking, setBooking] = useState({ venue: '', date: '', vibe: '' });
+  // Updated Booking State
+  const [booking, setBooking] = useState({ 
+    instagram: '', 
+    contactNumber: '', 
+    venue: '', 
+    date: '', 
+    vibe: '' 
+  });
   
-  // New Mail States
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState('idle'); // 'idle' | 'success' | 'error'
 
@@ -267,29 +273,28 @@ export default function DJPortfolio() {
 
   // --- API BACKGROUND MAIL LOGIC ---
   const handleEmailBooking = async () => {
-    // Prevent empty sends
-    if (!booking.venue && !booking.date && !booking.vibe) return;
+    // Prevent empty sends - Ensure we have at least a way to contact them back
+    if (!booking.instagram && !booking.contactNumber) {
+      alert("Please provide an Instagram handle or Contact Number so I can reach you!");
+      return;
+    }
 
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
-      // Calls the internal Next.js API Route we will build
       const res = await fetch('/api/send-booking', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(booking),
       });
 
       if (!res.ok) throw new Error('Failed to send booking request');
 
-      // Success State
       setSubmitStatus('success');
-      setBooking({ venue: '', date: '', vibe: '' }); // Clear the form
+      // Clear the form
+      setBooking({ instagram: '', contactNumber: '', venue: '', date: '', vibe: '' }); 
 
-      // Reset button UI after 3 seconds
       setTimeout(() => setSubmitStatus('idle'), 3000);
 
     } catch (error) {
@@ -299,6 +304,15 @@ export default function DJPortfolio() {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  // Helper function to auto-format Instagram handle
+  const handleIgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value.trim();
+    if (val && !val.startsWith('@')) {
+      val = '@' + val;
+    }
+    setBooking(prev => ({ ...prev, instagram: val }));
   };
 
   return (
@@ -580,7 +594,7 @@ export default function DJPortfolio() {
                       </PageWrapper>
                     )}
 
-                    {/* CONTACT VIEW - 2-Column Split, Mobile Friendly Brutalist */}
+                    {/* CONTACT VIEW */}
                     {activeView === 'contact' && (
                       <PageWrapper key="contact" title="CONTACT" noScroll={false}>
                         <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.4 }} className="border-4 border-black shadow-[8px_8px_0_0_#000] md:shadow-[12px_12px_0_0_#000] flex flex-col md:flex-row w-full max-w-5xl mx-auto mb-12 min-h-[400px]">
@@ -600,33 +614,80 @@ export default function DJPortfolio() {
 
                           {/* RIGHT SIDE - Form Box */}
                           <div className="w-full md:w-7/12 p-6 md:p-10 flex flex-col bg-[#CCFF00] text-black shrink-0">
-                            <div className="flex flex-col gap-6 flex-1 mb-8 md:mb-12">
-                              {/* Venue Input */}
-                              <div className="flex flex-col gap-1 group">
-                                <label className="text-sm font-black tracking-widest uppercase opacity-60">1. Venue</label>
-                                <input type="text" value={booking.venue} onChange={(e) => setBooking({...booking, venue: e.target.value})} className="bg-transparent border-b-4 border-black/20 outline-none w-full text-2xl md:text-3xl font-black tracking-tighter text-[#0024E0] pb-1 focus:border-black placeholder:text-black/20 transition-colors rounded-none" placeholder="Where is it at?" disabled={isSubmitting} />
+                            <div className="flex flex-col gap-5 md:gap-6 flex-1 mb-8 md:mb-12">
+                              
+                              {/* ROW 1: WHO */}
+                              <div className="flex flex-col sm:flex-row gap-5 md:gap-6 w-full">
+                                {/* IG Input */}
+                                <div className="flex flex-col gap-1 group w-full sm:w-1/2">
+                                  <label className="text-sm font-black tracking-widest uppercase opacity-60">1. Your Instagram</label>
+                                  <input 
+                                    type="text" 
+                                    value={booking.instagram} 
+                                    onChange={handleIgChange} 
+                                    className="bg-transparent border-b-4 border-black/20 outline-none w-full text-xl md:text-2xl font-black tracking-tighter text-[#0024E0] pb-1 focus:border-black placeholder:text-black/20 transition-colors rounded-none" 
+                                    placeholder="@brunchboy" 
+                                    disabled={isSubmitting} 
+                                  />
+                                </div>
+
+                                {/* Contact Input */}
+                                <div className="flex flex-col gap-1 group w-full sm:w-1/2">
+                                  <label className="text-sm font-black tracking-widest uppercase opacity-60">2. Contact</label>
+                                  <input 
+                                    type="tel" 
+                                    value={booking.contactNumber} 
+                                    onChange={(e) => setBooking({...booking, contactNumber: e.target.value})} 
+                                    className="bg-transparent border-b-4 border-black/20 outline-none w-full text-xl md:text-2xl font-black tracking-tighter text-[#0024E0] pb-1 focus:border-black placeholder:text-black/20 transition-colors rounded-none" 
+                                    placeholder="0917..." 
+                                    disabled={isSubmitting} 
+                                  />
+                                </div>
+                              </div>
+
+                              {/* ROW 2: WHERE & WHEN */}
+                              <div className="flex flex-col sm:flex-row gap-5 md:gap-6 w-full">
+                                {/* Venue Input */}
+                                <div className="flex flex-col gap-1 group w-full sm:w-1/2">
+                                  <label className="text-sm font-black tracking-widest uppercase opacity-60">3. Venue</label>
+                                  <input 
+                                    type="text" 
+                                    value={booking.venue} 
+                                    onChange={(e) => setBooking({...booking, venue: e.target.value})} 
+                                    className="bg-transparent border-b-4 border-black/20 outline-none w-full text-xl md:text-2xl font-black tracking-tighter text-[#0024E0] pb-1 focus:border-black placeholder:text-black/20 transition-colors rounded-none" 
+                                    placeholder="Where is it at?" 
+                                    disabled={isSubmitting} 
+                                  />
+                                </div>
+                                
+                                {/* Date Input */}
+                                <div className="flex flex-col gap-1 group w-full sm:w-1/2">
+                                  <label className="text-sm font-black tracking-widest uppercase opacity-60">4. Date</label>
+                                  <input 
+                                    type="date" 
+                                    value={booking.date} 
+                                    onChange={(e) => setBooking({...booking, date: e.target.value})} 
+                                    className={`bg-transparent border-b-4 border-black/20 outline-none w-full text-xl md:text-2xl font-black tracking-tighter text-[#FF3300] pb-1 focus:border-black transition-colors rounded-none ${!booking.date ? 'opacity-50' : 'opacity-100'}`} 
+                                    disabled={isSubmitting}
+                                  />
+                                </div>
                               </div>
                               
-                              {/* Date Input - strictly set to type="date" */}
-                              <div className="flex flex-col gap-1 group">
-                                <label className="text-sm font-black tracking-widest uppercase opacity-60">2. Date</label>
+                              {/* ROW 3: WHAT */}
+                              <div className="flex flex-col gap-1 group w-full">
+                                <label className="text-sm font-black tracking-widest uppercase opacity-60">5. Vibe</label>
                                 <input 
-                                  type="date" 
-                                  value={booking.date} 
-                                  onChange={(e) => setBooking({...booking, date: e.target.value})} 
-                                  className={`bg-transparent border-b-4 border-black/20 outline-none w-full text-2xl md:text-3xl font-black tracking-tighter text-[#FF3300] pb-1 focus:border-black transition-colors rounded-none ${!booking.date ? 'opacity-50' : 'opacity-100'}`} 
-                                  disabled={isSubmitting}
+                                  type="text" 
+                                  value={booking.vibe} 
+                                  onChange={(e) => setBooking({...booking, vibe: e.target.value})} 
+                                  className="bg-transparent border-b-4 border-black/20 outline-none w-full text-xl md:text-2xl font-black tracking-tighter text-[#0024E0] pb-1 focus:border-black placeholder:text-black/20 transition-colors rounded-none" 
+                                  placeholder="What's the energy?" 
+                                  disabled={isSubmitting} 
                                 />
-                              </div>
-                              
-                              {/* Vibe Input */}
-                              <div className="flex flex-col gap-1 group">
-                                <label className="text-sm font-black tracking-widest uppercase opacity-60">3. Vibe</label>
-                                <input type="text" value={booking.vibe} onChange={(e) => setBooking({...booking, vibe: e.target.value})} className="bg-transparent border-b-4 border-black/20 outline-none w-full text-2xl md:text-3xl font-black tracking-tighter text-[#0024E0] pb-1 focus:border-black placeholder:text-black/20 transition-colors rounded-none" placeholder="What's the energy?" disabled={isSubmitting} />
                               </div>
                             </div>
                             
-                            {/* Action Button - Single width Email sender with UI States */}
+                            {/* Action Button */}
                             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 shrink-0 w-full mt-auto">
                               <button 
                                 onClick={handleEmailBooking} 

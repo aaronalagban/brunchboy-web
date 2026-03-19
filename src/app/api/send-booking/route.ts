@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   try {
     // 1. Get the data from the frontend fetch
     const body = await request.json();
-    const { venue, date, vibe } = body;
+    const { instagram, contactNumber, venue, date, vibe } = body;
 
     // 2. Format the date to look nice in your email
     const formattedDate = date 
@@ -21,19 +21,24 @@ export async function POST(request: Request) {
       : 'TBA';
 
     // 3. Send the email!
-    // NOTE: Because you are on a free Resend tier without a custom domain, 
-    // you MUST use 'onboarding@resend.dev' as the FROM address, and your account email as the TO address.
     const data = await resend.emails.send({
       from: 'Booking Request <onboarding@resend.dev>', 
       to: 'aaronalagban.work@gmail.com', // MUST MATCH the email you signed up to Resend with!
       subject: `New Booking Request: ${venue || 'TBA'}`,
       html: `
-        <div style="font-family: sans-serif; padding: 20px;">
-          <h2>New Booking Request for BRUNCHBOY</h2>
-          <hr />
-          <p><strong>📍 Venue:</strong> ${venue || 'Not specified'}</p>
-          <p><strong>📅 Date:</strong> ${formattedDate}</p>
-          <p><strong>🎵 Vibe:</strong> ${vibe || 'Not specified'}</p>
+        <div style="font-family: sans-serif; padding: 20px; color: #111;">
+          <h2 style="margin-bottom: 5px;">New Booking Request for BRUNCHBOY</h2>
+          <p style="color: #666; margin-top: 0;">You have received a new set of details through the site.</p>
+          <hr style="border: none; border-top: 1px solid #eaeaea; margin: 20px 0;" />
+          
+          <h3 style="margin-bottom: 10px; color: #0024E0;">Contact Info</h3>
+          <p style="margin: 5px 0;"><strong>📱 Instagram:</strong> <a href="https://instagram.com/${instagram?.replace('@', '')}" target="_blank" style="color: #FF3300; text-decoration: none;">${instagram || 'Not specified'}</a></p>
+          <p style="margin: 5px 0;"><strong>📞 Contact Number:</strong> ${contactNumber || 'Not specified'}</p>
+
+          <h3 style="margin-top: 25px; margin-bottom: 10px; color: #0024E0;">Event Details</h3>
+          <p style="margin: 5px 0;"><strong>📍 Venue:</strong> ${venue || 'Not specified'}</p>
+          <p style="margin: 5px 0;"><strong>📅 Date:</strong> ${formattedDate}</p>
+          <p style="margin: 5px 0;"><strong>🎵 Vibe:</strong> ${vibe || 'Not specified'}</p>
         </div>
       `,
     });
