@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, LayoutGroup, Variants } from 'framer-motion';
-import { ArrowRight, Play, Pause, ArrowLeft, ArrowUpRight, Download, SkipForward, SkipBack, X } from 'lucide-react';
+import { ArrowRight, Play, Pause, ArrowLeft, ArrowUpRight, Download, SkipForward, SkipBack, X, Check } from 'lucide-react';
 
 // --- BRAND DATA ---
 const DJ_DATA = {
@@ -48,7 +48,7 @@ const DJ_DATA = {
       image: "/photos/dev-1.jpg"
     }
   ],
-  contact: { email: "aaronalagban@gmail.com", ig: "aaronalagbann" }
+  contact: { email: "aaronalagban.work@gmail.com", ig: "aaronalagbann" }
 };
 
 const NAV_ITEMS = ['about', 'mixes', 'gigs', 'photos', 'contact', 'dev'];
@@ -165,7 +165,11 @@ export default function DJPortfolio() {
   const [progress, setProgress] = useState(0);
 
   const [booking, setBooking] = useState({ venue: '', date: '', vibe: '' });
-  const [copied, setCopied] = useState(false);
+  
+  // New Mail States
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState('idle'); // 'idle' | 'success' | 'error'
+
   const [loaderTick, setLoaderTick] = useState(0);
   
   const [isDesktop, setIsDesktop] = useState(true);
@@ -261,44 +265,40 @@ export default function DJPortfolio() {
     audioRef.current.currentTime = pos * audioRef.current.duration;
   };
 
-  // Robust Clipboard Fallback for local testing (HTTP bypass)
-  const copyToClipboard = async (text: string) => {
-    try {
-      if (navigator?.clipboard?.writeText) {
-        await navigator.clipboard.writeText(text);
-        return;
-      }
-    } catch (e) {
-      console.warn("Clipboard API failed, using fallback", e);
-    }
-    // Fallback for HTTP (local testing on phone)
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-    textArea.style.top = "0";
-    textArea.style.left = "0";
-    textArea.style.position = "fixed";
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-      document.execCommand('copy');
-    } catch (err) {
-      console.error('Fallback: Oops, unable to copy', err);
-    }
-    document.body.removeChild(textArea);
-  };
+  // --- API BACKGROUND MAIL LOGIC ---
+  const handleEmailBooking = async () => {
+    // Prevent empty sends
+    if (!booking.venue && !booking.date && !booking.vibe) return;
 
-  const handleIGBooking = async () => {
-    const message = `Hey Aaron! We want to book BRUNCHBOY.\n\nVenue: ${booking.venue || '[Venue]'}\nDate: ${booking.date || '[Date]'}\nVibe: ${booking.vibe || '[Vibe]'}`;
-    
-    await copyToClipboard(message);
-    setCopied(true);
-    
-    // Guaranteed 2.5s wait before routing so they can read "COPIED!"
-    setTimeout(() => { 
-      setCopied(false); 
-      window.open(`https://ig.me/m/${DJ_DATA.contact.ig}`, '_blank'); 
-    }, 2500);
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      // Calls the internal Next.js API Route we will build
+      const res = await fetch('/api/send-booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(booking),
+      });
+
+      if (!res.ok) throw new Error('Failed to send booking request');
+
+      // Success State
+      setSubmitStatus('success');
+      setBooking({ venue: '', date: '', vibe: '' }); // Clear the form
+
+      // Reset button UI after 3 seconds
+      setTimeout(() => setSubmitStatus('idle'), 3000);
+
+    } catch (error) {
+      console.error(error);
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus('idle'), 3000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -390,10 +390,8 @@ export default function DJPortfolio() {
                           {activeView === item && <motion.div layoutId="nav-dot" className="absolute bottom-2 right-2 w-3 h-3 bg-black rounded-full" />}
                         </button>
                       ))}
-                      {/* Invisible Spacer for mobile hint margin */}
                       <div className="min-w-[40px] md:hidden h-full shrink-0" />
                     </nav>
-                    {/* Visual fade hint on mobile to show horizontal scrollability */}
                     <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#0024E0] to-transparent pointer-events-none md:hidden z-10" />
                   </div>
                 </header>
@@ -401,7 +399,6 @@ export default function DJPortfolio() {
                 <div className="absolute left-0 right-0 bottom-0 transition-all duration-500 z-10 bg-transparent" style={{ top: '80px' }}>
                   <MotionGrid />
                   
-                  {/* Background shapes hidden for dev view to preserve clean dashboard look */}
                   <motion.div initial={false} animate={{ opacity: (activeView === 'about' || activeView === 'dev') ? 0 : 1 }} transition={{ duration: 0.5 }} className="absolute inset-0 pointer-events-none z-0">
                     <AppBackgroundShapes />
                   </motion.div>
@@ -548,7 +545,7 @@ export default function DJPortfolio() {
                           </motion.div>
                         )}
 
-                        {/* Venues Played Tab - FIXED: using grid instead of columns to prevent reflow jitter */}
+                        {/* Venues Played Tab */}
                         {gigTab === 'venues' && (
                           <motion.div variants={staggerContainer} initial="hidden" animate="show" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4 pb-24 auto-rows-max">
                             {DJ_DATA.venues.map((venue, i) => {
@@ -607,31 +604,46 @@ export default function DJPortfolio() {
                               {/* Venue Input */}
                               <div className="flex flex-col gap-1 group">
                                 <label className="text-sm font-black tracking-widest uppercase opacity-60">1. Venue</label>
-                                <input type="text" value={booking.venue} onChange={(e) => setBooking({...booking, venue: e.target.value})} className="bg-transparent border-b-4 border-black/20 outline-none w-full text-2xl md:text-3xl font-black tracking-tighter text-[#0024E0] pb-1 focus:border-black placeholder:text-black/20 transition-colors rounded-none" placeholder="Where is it at?" />
+                                <input type="text" value={booking.venue} onChange={(e) => setBooking({...booking, venue: e.target.value})} className="bg-transparent border-b-4 border-black/20 outline-none w-full text-2xl md:text-3xl font-black tracking-tighter text-[#0024E0] pb-1 focus:border-black placeholder:text-black/20 transition-colors rounded-none" placeholder="Where is it at?" disabled={isSubmitting} />
                               </div>
                               
-                              {/* Date Input */}
+                              {/* Date Input - strictly set to type="date" */}
                               <div className="flex flex-col gap-1 group">
                                 <label className="text-sm font-black tracking-widest uppercase opacity-60">2. Date</label>
-                                <input type="text" value={booking.date} onChange={(e) => setBooking({...booking, date: e.target.value})} className="bg-transparent border-b-4 border-black/20 outline-none w-full text-2xl md:text-3xl font-black tracking-tighter text-[#FF3300] pb-1 focus:border-black placeholder:text-black/20 transition-colors rounded-none" placeholder="MM/DD/YY" />
+                                <input 
+                                  type="date" 
+                                  value={booking.date} 
+                                  onChange={(e) => setBooking({...booking, date: e.target.value})} 
+                                  className={`bg-transparent border-b-4 border-black/20 outline-none w-full text-2xl md:text-3xl font-black tracking-tighter text-[#FF3300] pb-1 focus:border-black transition-colors rounded-none ${!booking.date ? 'opacity-50' : 'opacity-100'}`} 
+                                  disabled={isSubmitting}
+                                />
                               </div>
                               
                               {/* Vibe Input */}
                               <div className="flex flex-col gap-1 group">
                                 <label className="text-sm font-black tracking-widest uppercase opacity-60">3. Vibe</label>
-                                <input type="text" value={booking.vibe} onChange={(e) => setBooking({...booking, vibe: e.target.value})} className="bg-transparent border-b-4 border-black/20 outline-none w-full text-2xl md:text-3xl font-black tracking-tighter text-[#0024E0] pb-1 focus:border-black placeholder:text-black/20 transition-colors rounded-none" placeholder="What's the energy?" />
+                                <input type="text" value={booking.vibe} onChange={(e) => setBooking({...booking, vibe: e.target.value})} className="bg-transparent border-b-4 border-black/20 outline-none w-full text-2xl md:text-3xl font-black tracking-tighter text-[#0024E0] pb-1 focus:border-black placeholder:text-black/20 transition-colors rounded-none" placeholder="What's the energy?" disabled={isSubmitting} />
                               </div>
                             </div>
                             
-                            {/* Action Buttons */}
+                            {/* Action Button - Single width Email sender with UI States */}
                             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 shrink-0 w-full mt-auto">
-                              <button onClick={handleIGBooking} disabled={copied} className={`flex-1 border-4 border-black px-4 py-4 md:py-5 text-lg sm:text-xl md:text-2xl font-black hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#000] active:translate-y-0 active:shadow-none transition-all flex justify-between items-center leading-none uppercase ${copied ? 'bg-white text-black' : 'bg-[#FF3300] text-white'}`}>
-                                <span className="truncate pr-2">{copied ? 'COPIED! PASTE IN DMS' : 'SEND TO INSTAGRAM'}</span>
-                                <ArrowUpRight size={28} className="shrink-0" />
+                              <button 
+                                onClick={handleEmailBooking} 
+                                disabled={isSubmitting || submitStatus === 'success'}
+                                className={`w-full border-4 border-black px-6 py-4 md:py-5 text-lg sm:text-xl md:text-2xl font-black transition-all flex justify-between items-center leading-none uppercase 
+                                  ${submitStatus === 'success' ? 'bg-white text-black translate-y-0 shadow-none' : 
+                                    submitStatus === 'error' ? 'bg-black text-[#FF3300]' : 
+                                    'bg-[#FF3300] text-white hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#000] active:translate-y-0 active:shadow-none'}`}
+                              >
+                                <span className="truncate pr-2">
+                                  {isSubmitting ? 'SENDING...' : 
+                                   submitStatus === 'success' ? 'REQUEST SENT!' : 
+                                   submitStatus === 'error' ? 'ERROR - TRY AGAIN' : 
+                                   'SEND REQUEST'}
+                                </span>
+                                {submitStatus === 'success' ? <Check size={28} className="shrink-0 text-green-500" /> : <ArrowUpRight size={28} className="shrink-0" />}
                               </button>
-                              <a href={`mailto:${DJ_DATA.contact.email}?subject=Booking Request BRUNCHBOY&body=Venue: ${booking.venue}%0D%0ADate: ${booking.date}%0D%0AVibe: ${booking.vibe}`} className="border-4 border-black px-6 py-4 md:py-5 text-lg sm:text-xl md:text-2xl font-black bg-white hover:bg-black hover:text-white hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#000] transition-all flex items-center justify-center shrink-0">
-                                EMAIL
-                              </a>
                             </div>
                           </div>
                           
@@ -691,7 +703,6 @@ export default function DJPortfolio() {
                                      </a>
                                    </div>
                                    
-                                   {/* Notice normal-case to make the description highly readable */}
                                    <p className="text-[#CCFF00]/80 mb-6 md:mb-8 text-sm md:text-base leading-relaxed font-medium normal-case break-words whitespace-normal">
                                      {proj.description}
                                    </p>
@@ -831,6 +842,16 @@ export default function DJPortfolio() {
         .dev-scrollbar::-webkit-scrollbar { width: 12px; border-left: 1px solid rgba(204,255,0,0.2); background: black; }
         .dev-scrollbar::-webkit-scrollbar-thumb { background: rgba(204,255,0,0.4); border: 1px solid black; }
         .dev-scrollbar::-webkit-scrollbar-thumb:hover { background: #CCFF00; }
+        
+        /* Ensures the calendar icon shows up nicely */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+          cursor: pointer;
+          opacity: 0.6;
+          transition: 0.2s;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator:hover {
+          opacity: 1;
+        }
       `}} />
     </div>
   );
