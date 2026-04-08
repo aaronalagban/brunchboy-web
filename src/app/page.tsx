@@ -12,10 +12,15 @@ const DJ_DATA = {
   genres: ["House", "Soulful House", "Jazz House","Tech House", "Hard House", "Disco", "UKG", "R&B", "Hip-Hop", "Brazilian Funk"],
   venues: ["Kampai, Makati", "Nokal, Makati", "Solaire Skybar, QC", "Oniba Bar, QC", "Post Ceremony, QC", "Palma Roof Bar, Manila", "Bugsys, Makati", "Salty Coconut, Makati", "E285, QC", "Rosie's, Makati", "Lan Kwai, QC", "Roponggi, QC", "Forbestown Park, BGC", "Open Space, Makati", "Estancia, Pasig", "Corner House, San Juan", "Project Vino, Rockwell", "Elsewhere, Manila", "Z Hostel, Makati", "Polilya, Makati"],
   notableGigs: [
+    "/photos/gig-poster-3.jpg",
+    "/photos/gig-poster-4.jpg",
     "/photos/gig-poster-1.jpg",
     "/photos/gig-poster-2.jpg",
   ],
   photos: [
+    "/photos/brunchboy-9.jpg",
+    "/photos/brunchboy-10.jpg",
+    "/photos/brunchboy-11.jpg",
     "/photos/brunchboy-1.jpg",
     "/photos/brunchboy-2.jpg",
     "/photos/brunchboy-3.jpg",
@@ -26,10 +31,10 @@ const DJ_DATA = {
     "/photos/brunchboy-8.jpg"
   ],
   mixes: [
-    { id: 1, title: "UKG WARMUP!", type: "UK GARAGE, HOUSE", date: "FEB 9", duration: "48:52", cover: "/photos/ukg-mix.gif", audioSrc: "https://jocrmhdrpfnspllelvkz.supabase.co/storage/v1/object/public/mixes/ukg-mix.mp3" },
-    { id: 2, title: "MARCH HOUSE FINDS", type: "ELECTRO FUNK, HOUSE", date: "MAR 12", duration: "27:48", cover: "/photos/electro-funky-house.gif", audioSrc: "https://jocrmhdrpfnspllelvkz.supabase.co/storage/v1/object/public/mixes/electro-funky-house.mp3" },
-    { id: 3, title: "POCKET GROOVES", type: "JAZZ & SOULFUL HOUSE", date: "MAR 14", duration: "50:29", cover: "/photos/jazzy-soulful.gif", audioSrc: "https://jocrmhdrpfnspllelvkz.supabase.co/storage/v1/object/public/mixes/jazzy-soulful.mp3" },
-    { id: 4, title: "R&B @ MoMa", type: "R&B, EDITS", date: "MAR 14", duration: "23:54", cover: "/photos/moma-rnb.gif", audioSrc: "https://jocrmhdrpfnspllelvkz.supabase.co/storage/v1/object/public/mixes/moma-rnb.mp3" },
+    { id: 1, title: "UKG WARMUP!", type: "UK GARAGE, HOUSE", date: "FEB 9", duration: "48:52", cover: "/photos/ukg-mix.gif", audioSrc: "https://aqhavvixrywiuzjraxfy.supabase.co/storage/v1/object/public/mixes/ukg-mix.mp3" },
+    { id: 2, title: "MARCH HOUSE FINDS", type: "ELECTRO FUNK, HOUSE", date: "MAR 12", duration: "27:48", cover: "/photos/electro-funky-house.gif", audioSrc: "https://aqhavvixrywiuzjraxfy.supabase.co/storage/v1/object/public/mixes/electro-funky-house.mp3" },
+    { id: 3, title: "POCKET GROOVES", type: "JAZZ & SOULFUL HOUSE", date: "MAR 14", duration: "50:29", cover: "/photos/jazzy-soulful.gif", audioSrc: "https://aqhavvixrywiuzjraxfy.supabase.co/storage/v1/object/public/mixes/jazzy-soulful.mp3" },
+    { id: 4, title: "R&B @ MoMa", type: "R&B, EDITS", date: "MAR 14", duration: "23:54", cover: "/photos/moma-rnb.gif", audioSrc: "https://aqhavvixrywiuzjraxfy.supabase.co/storage/v1/object/public/mixes/moma-rnb.mp3" },
   ],
   videoMixes: [
     { id: 'v1', title: "LET THEM COOK: B2B WITH LIMMY", url: "https://www.youtube.com/embed/Gicls7ocdrc?si=EES7r1N0bGoNO6QB" },
@@ -924,7 +929,7 @@ const PageWrapper = ({ children, title, subtitle = '', noScroll = false, headerR
     <div className="flex-shrink-0 z-20 bg-[#0024E0] pt-6 md:pt-12 pb-4 px-6 md:px-12 border-b-4 border-white shadow-xl">
        <div className="max-w-[1400px] mx-auto w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
           <div className="flex flex-col w-full min-w-0">
-             <h2 className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter leading-none text-white mix-blend-difference break-words whitespace-normal">{title}</h2>
+             <h2 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter leading-none text-white mix-blend-difference break-words whitespace-normal">{title}</h2>
              {subtitle && <span className="text-sm sm:text-lg md:text-2xl font-bold text-[#CCFF00] tracking-widest mt-2 block break-words">{subtitle}</span>}
           </div>
           {headerRight && <div className="flex-shrink-0 w-full md:w-auto overflow-x-auto hide-scrollbar pb-1 md:pb-0">{headerRight}</div>}
@@ -932,7 +937,7 @@ const PageWrapper = ({ children, title, subtitle = '', noScroll = false, headerR
     </div>
     <div className={`flex-1 w-full px-6 md:px-12 ${noScroll ? 'overflow-hidden' : 'overflow-y-auto custom-scrollbar'}`}>
       <div className={`max-w-[1400px] mx-auto w-full h-full pt-6 md:pt-12 ${noScroll ? 'pb-6 md:pb-12' : 'pb-40'}`}>
-         {children}
+                 {children}
       </div>
     </div>
   </motion.div>
