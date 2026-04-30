@@ -10,12 +10,14 @@ const DJ_DATA = {
   tagline: "I PLAY THE GOOD STUFF.",
   about: "Keeping it locked into groove and control, building energy with intention and reading the room with absolute precision. Whether leaning into deep club rhythms or turning up the floor with global heat, every selection is deliberate and well-placed. Defined by sharp taste and real musical awareness, sets move naturally and land exactly where they need to.",
   genres: ["House", "Soulful House", "Jazz House","Tech House", "Hard House", "Disco", "UKG", "R&B", "Hip-Hop", "Brazilian Funk"],
-  venues: ["Kampai, Makati", "Nokal, Makati", "Solaire Skybar, QC", "Oniba Bar, QC", "Post Ceremony, QC", "Palma Roof Bar, Manila", "Bugsys, Makati", "Salty Coconut, Makati", "E285, QC", "Rosie's, Makati", "Lan Kwai, QC", "Roponggi, QC", "Forbestown Park, BGC", "Open Space, Makati", "Estancia, Pasig", "Corner House, San Juan", "Project Vino, Rockwell", "Elsewhere, Manila", "Z Hostel, Makati", "Polilya, Makati"],
+  venues: ["Kampai, Makati", "Xin Chào, Makati", "Nokal, Makati", "Solaire Skybar, QC", "Oniba Bar, QC", "Post Ceremony, QC", "Palma Roof Bar, Manila", "Bugsys, Makati", "Salty Coconut, Makati", "E285, QC", "Rosie's, Makati", "Lan Kwai, QC", "Roponggi, QC", "Forbestown Park, BGC", "Open Space, Makati", "Estancia, Pasig", "Corner House, San Juan", "Project Vino, Rockwell", "Elsewhere, Manila", "Z Hostel, Makati", "Polilya, Makati"],
   notableGigs: [
     "/photos/gig-poster-3.jpg",
+    "/photos/gig-poster-6.jpg",
     "/photos/gig-poster-4.jpg",
-    "/photos/gig-poster-1.jpg",
+    "/photos/gig-poster-5.jpg",
     "/photos/gig-poster-2.jpg",
+    "/photos/gig-poster-1.jpg",
   ],
   photos: [
     "/photos/brunchboy-9.jpg",
@@ -31,10 +33,11 @@ const DJ_DATA = {
     "/photos/brunchboy-8.jpg"
   ],
   mixes: [
-    { id: 1, title: "UKG WARMUP!", type: "UK GARAGE, HOUSE", date: "FEB 9", duration: "48:52", cover: "/photos/ukg-mix.gif", audioSrc: "https://aqhavvixrywiuzjraxfy.supabase.co/storage/v1/object/public/mixes/ukg-mix.mp3" },
-    { id: 2, title: "MARCH HOUSE FINDS", type: "ELECTRO FUNK, HOUSE", date: "MAR 12", duration: "27:48", cover: "/photos/electro-funky-house.gif", audioSrc: "https://aqhavvixrywiuzjraxfy.supabase.co/storage/v1/object/public/mixes/electro-funky-house.mp3" },
-    { id: 3, title: "POCKET GROOVES", type: "JAZZ & SOULFUL HOUSE", date: "MAR 14", duration: "50:29", cover: "/photos/jazzy-soulful.gif", audioSrc: "https://aqhavvixrywiuzjraxfy.supabase.co/storage/v1/object/public/mixes/jazzy-soulful.mp3" },
-    { id: 4, title: "R&B @ MoMa", type: "R&B, EDITS", date: "MAR 14", duration: "23:54", cover: "/photos/moma-rnb.gif", audioSrc: "https://aqhavvixrywiuzjraxfy.supabase.co/storage/v1/object/public/mixes/moma-rnb.mp3" },
+    { id: 1, title: "FOUR ON THE FLOOR", type: "SOULFUL HOUSE, HOUSE", date: "APR 4", duration: "49:22", cover: "/photos/soulful-house-1.gif", audioSrc: "https://aqhavvixrywiuzjraxfy.supabase.co/storage/v1/object/public/mixes/soulful-house-1.mp3" },
+    { id: 2, title: "UKG WARMUP!", type: "UK GARAGE, HOUSE", date: "FEB 9", duration: "48:52", cover: "/photos/ukg-mix.gif", audioSrc: "https://aqhavvixrywiuzjraxfy.supabase.co/storage/v1/object/public/mixes/ukg-mix.mp3" },
+    { id: 3, title: "MARCH HOUSE FINDS", type: "ELECTRO FUNK, HOUSE", date: "MAR 12", duration: "27:48", cover: "/photos/electro-funky-house.gif", audioSrc: "https://aqhavvixrywiuzjraxfy.supabase.co/storage/v1/object/public/mixes/electro-funky-house.mp3" },
+    { id: 4, title: "POCKET GROOVES", type: "JAZZ & SOULFUL HOUSE", date: "MAR 14", duration: "50:29", cover: "/photos/jazzy-soulful.gif", audioSrc: "https://aqhavvixrywiuzjraxfy.supabase.co/storage/v1/object/public/mixes/jazzy-soulful.mp3" },
+    { id: 5, title: "R&B @ MoMa", type: "R&B, EDITS", date: "MAR 14", duration: "23:54", cover: "/photos/moma-rnb.gif", audioSrc: "https://aqhavvixrywiuzjraxfy.supabase.co/storage/v1/object/public/mixes/moma-rnb.mp3" },
   ],
   videoMixes: [
     { id: 'v1', title: "LET THEM COOK: B2B WITH LIMMY", url: "https://www.youtube.com/embed/Gicls7ocdrc?si=EES7r1N0bGoNO6QB" },
@@ -397,14 +400,14 @@ export default function DJPortfolio() {
             {appState === 'app' && (
               <motion.div key="app" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="flex flex-col flex-1 h-full w-full pointer-events-auto relative">
                 
-                <header className="flex-shrink-0 flex items-center h-[80px] border-b-4 border-white bg-[#0024E0] relative z-20">
-                  <button onClick={() => setAppState('landing')} className="h-full px-6 border-r-4 border-white hover:bg-[#FF3300] hover:text-white transition-colors flex items-center justify-center z-20">
-                    <ArrowLeft size={32} strokeWidth={3} />
+                <header className="flex-shrink-0 flex items-center h-[68px] border-b-4 border-white bg-[#0024E0] relative z-20">
+                  <button onClick={() => setAppState('landing')} className="h-full px-5 border-r-4 border-white hover:bg-[#FF3300] hover:text-white transition-colors flex items-center justify-center z-20">
+                    <ArrowLeft size={28} strokeWidth={3} />
                   </button>
                   <div className="flex-1 h-full relative overflow-hidden">
                     <nav className="flex items-center overflow-x-auto hide-scrollbar h-full w-full">
                       {NAV_ITEMS.map((item) => (
-                        <button key={item} onClick={() => setActiveView(item)} className={`px-6 md:px-10 h-full border-r-4 border-white text-xl md:text-3xl font-black tracking-tighter flex items-center transition-colors relative whitespace-nowrap ${activeView === item ? 'bg-[#CCFF00] text-black' : 'hover:bg-white hover:text-black'}`}>
+                        <button key={item} onClick={() => setActiveView(item)} className={`px-5 md:px-8 h-full border-r-4 border-white text-lg md:text-2xl font-black tracking-tighter flex items-center transition-colors relative whitespace-nowrap ${activeView === item ? 'bg-[#CCFF00] text-black' : 'hover:bg-white hover:text-black'}`}>
                           {item}
                           {activeView === item && <motion.div layoutId="nav-dot" className="absolute bottom-2 right-2 w-3 h-3 bg-black rounded-full" />}
                         </button>
@@ -415,7 +418,7 @@ export default function DJPortfolio() {
                   </div>
                 </header>
 
-                <div className="absolute left-0 right-0 bottom-0 transition-all duration-500 z-10 bg-transparent" style={{ top: '80px' }}>
+                <div className="absolute left-0 right-0 bottom-0 transition-all duration-500 z-10 bg-transparent" style={{ top: '68px' }}>
                   <MotionGrid />
                   
                   <motion.div initial={false} animate={{ opacity: (activeView === 'about' || activeView === 'dev') ? 0 : 1 }} transition={{ duration: 0.5 }} className="absolute inset-0 pointer-events-none z-0">
@@ -471,7 +474,7 @@ export default function DJPortfolio() {
                               return (
                                 <motion.div variants={itemVariant} key={mix.id} onClick={() => togglePlay(mix)} className="group cursor-pointer flex flex-col items-center w-full max-w-[320px] mx-auto">
                                   <div className={`relative w-full aspect-square mb-4 border-4 transition-all duration-300 ${isThisPlaying ? 'border-[#CCFF00] shadow-[0_0_30px_rgba(204,255,0,0.6)] scale-105' : isActive ? 'border-[#CCFF00]' : 'border-white hover:border-[#FF3300] hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(255,51,0,0.6)]'}`}>
-                                    <img src={mix.cover} className={`w-full h-full object-cover transition-all duration-500 ${isThisPlaying ? 'grayscale-0' : 'grayscale group-hover:grayscale-0'}`} alt="cover" />
+                                    <img src={mix.cover} className="w-full h-full object-cover transition-all duration-500" alt="cover" />
                                     <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity ${isThisPlaying ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
                                       {isThisPlaying ? <Pause size={48} fill="white" /> : <Play size={48} fill="white" />}
                                     </div>
@@ -558,7 +561,7 @@ export default function DJPortfolio() {
                           <motion.div variants={staggerContainer} initial="hidden" animate="show" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 pb-24">
                             {DJ_DATA.notableGigs.map((poster, i) => (
                               <motion.div variants={itemVariant} key={`poster-${i}`} className="border-4 border-white bg-black group relative overflow-hidden aspect-[4/5] hover:border-[#CCFF00] hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(204,255,0,0.5)] transition-all duration-300">
-                                 <img src={poster} alt={`Notable Gig ${i+1}`} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                                 <img src={poster} alt={`Notable Gig ${i+1}`} className="w-full h-full object-cover transition-all duration-500" />
                               </motion.div>
                             ))}
                           </motion.div>
@@ -587,7 +590,7 @@ export default function DJPortfolio() {
                         <motion.div variants={staggerContainer} initial="hidden" animate="show" className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6 pb-24">
                           {DJ_DATA.photos.map((src, i) => (
                             <motion.div variants={itemVariant} key={i} className="relative group overflow-hidden border-4 border-white break-inside-avoid bg-black hover:shadow-[12px_12px_0_0_#CCFF00] transition-shadow">
-                              <img src={src} alt={`Gallery ${i}`} className="w-full h-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                              <img src={src} alt={`Gallery ${i}`} className="w-full h-auto object-cover transition-all duration-500" />
                               <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <a href={src} download={`BRUNCHBOY_00${i+1}.jpg`} target="_blank" rel="noreferrer" className="text-white hover:text-[#CCFF00] drop-shadow-md bg-black/40 backdrop-blur-sm p-2 rounded block">
                                   <Download size={24} strokeWidth={2.5} />
@@ -851,7 +854,7 @@ export default function DJPortfolio() {
             <div className="flex items-center p-2 gap-3 w-full">
               {/* Left: Album Art */}
               <div className="w-10 h-10 rounded-sm shrink-0 overflow-hidden bg-black relative">
-                 <img src={currentMix.cover} className={`w-full h-full object-cover ${isPlaying ? 'opacity-100' : 'opacity-70 grayscale'}`} alt="cover" />
+                 <img src={currentMix.cover} className={`w-full h-full object-cover ${isPlaying ? 'opacity-100' : 'opacity-70'}`} alt="cover" />
                  {appState === 'landing' && isPlaying && (
                    <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                      <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 3, ease: "linear" }} className="w-4 h-4 rounded-full border-2 border-t-[#CCFF00] border-r-[#CCFF00] border-b-transparent border-l-transparent" />
@@ -926,17 +929,17 @@ export default function DJPortfolio() {
 // Fixed Sticky Header PageWrapper 
 const PageWrapper = ({ children, title, subtitle = '', noScroll = false, headerRight = null }: any) => (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4, ease: SMOOTH_EASE }} className="absolute inset-0 z-10 bg-transparent flex flex-col overflow-hidden">
-    <div className="flex-shrink-0 z-20 bg-[#0024E0] pt-6 md:pt-12 pb-4 px-6 md:px-12 border-b-4 border-white shadow-xl">
-       <div className="max-w-[1400px] mx-auto w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+    <div className="flex-shrink-0 z-20 bg-[#0024E0] pt-4 md:pt-8 pb-3 px-6 md:px-12 border-b-4 border-white shadow-xl">
+       <div className="max-w-[1400px] mx-auto w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-3">
           <div className="flex flex-col w-full min-w-0">
-             <h2 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter leading-none text-white mix-blend-difference break-words whitespace-normal">{title}</h2>
-             {subtitle && <span className="text-sm sm:text-lg md:text-2xl font-bold text-[#CCFF00] tracking-widest mt-2 block break-words">{subtitle}</span>}
+             <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-tighter leading-none text-white mix-blend-difference break-words whitespace-normal">{title}</h2>
+             {subtitle && <span className="text-xs sm:text-base md:text-xl font-bold text-[#CCFF00] tracking-widest mt-1.5 block break-words">{subtitle}</span>}
           </div>
           {headerRight && <div className="flex-shrink-0 w-full md:w-auto overflow-x-auto hide-scrollbar pb-1 md:pb-0">{headerRight}</div>}
        </div>
     </div>
     <div className={`flex-1 w-full px-6 md:px-12 ${noScroll ? 'overflow-hidden' : 'overflow-y-auto custom-scrollbar'}`}>
-      <div className={`max-w-[1400px] mx-auto w-full h-full pt-6 md:pt-12 ${noScroll ? 'pb-6 md:pb-12' : 'pb-40'}`}>
+      <div className={`max-w-[1400px] mx-auto w-full h-full pt-5 md:pt-8 ${noScroll ? 'pb-6 md:pb-12' : 'pb-40'}`}>
                  {children}
       </div>
     </div>
