@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, LayoutGroup, Variants } from 'framer-motion';
 import { ArrowRight, Play, Pause, ArrowLeft, ArrowUpRight, Download, SkipForward, SkipBack, X, Check } from 'lucide-react';
+import { Analytics } from "@vercel/analytics/next"
 
 // --- BRAND DATA ---
 const DJ_DATA = {
